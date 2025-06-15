@@ -24,5 +24,5 @@ xhost +localhost
 docker run -it --rm brain-sim
 ```
 
-![Y34fIRFZ9Vkp8qcms2Fo1749952643-1749952649](https://github.com/user-attachments/assets/06528047-b34c-4cc5-862d-7b8bc7342686)
+![wbtlPzO4g927rBd0BVcD1749953716-1749953720](https://github.com/user-attachments/assets/f5b4e81e-7f95-469c-b993-70cc7d3fdfd9)
 

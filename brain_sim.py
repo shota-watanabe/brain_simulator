@@ -2,7 +2,6 @@ import tkinter as tk
 import random
 import math
 
-# --- 定数設定 ---
 # ウィンドウのサイズ
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 700
@@ -19,7 +18,7 @@ ANIMATION_INTERVAL = 50
 
 class BrainFatigueVisualizer:
     """
-    スマホ利用による脳疲労を可視化するアプリケーションのメインクラス
+    メインクラス
     """
     def __init__(self, root):
         self.root = root
@@ -30,12 +29,8 @@ class BrainFatigueVisualizer:
         # --- UI要素の作成 ---
         self.canvas = tk.Canvas(root, width=CANVAS_WIDTH, height=CANVAS_HEIGHT, bg='#1a1a2e')
         self.canvas.pack()
-        
-        # 現在の状態を示すステータスラベルを追加
-        self.status_label = tk.Label(root, text="", font=("Helvetica", 14, "bold"))
-        self.status_label.pack(pady=5)
 
-        # ★★★ スライダーの最大値を8時間に変更 ★★★
+        # スライダーの最大値は8時間
         self.time_scale = tk.Scale(root, from_=0, to=8, resolution=0.1, orient=tk.HORIZONTAL,
                                    length=600, command=self.update_visualization)
         self.time_scale.set(0)
@@ -55,7 +50,7 @@ class BrainFatigueVisualizer:
 
     def _setup_brain_network(self):
         """
-        3D空間を意識して、球体内にニューロンを均等に配置する
+        球体内にニューロンを均等に配置
         """
         center_x, center_y = CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2
 
@@ -99,7 +94,7 @@ class BrainFatigueVisualizer:
 
     def _draw_neurons(self, usage_time):
         """
-        現在の疲労度と奥行き(Z座標)に応じてニューロンを描画する
+        現在の疲労度に応じてニューロンを描画する
         """
         # ★★★ ニューロンの消滅が「2時間」から始まるように変更 ★★★
         self.visible_neurons = [True] * len(self.neurons)
@@ -118,12 +113,12 @@ class BrainFatigueVisualizer:
         drawable_neurons.sort(key=lambda item: item[1]['z'])
 
         for i, neuron in drawable_neurons:
-            # ★★★ 疲労度の計算を「2時間」から始まるように変更 ★★★
+            # 疲労度の計算は「2時間」から始まる
             if usage_time < 2:
                 fatigue = 0.0
             else:
                 # 2時間から8時間にかけて疲労度が0から1に変化
-                fatigue = min((usage_time - 2) / 6.0, 1.0) 
+                fatigue = min((usage_time - 2) / 6.0, 1.0)
 
             z_factor = (neuron['z'] + 1) / 2
             display_r = neuron['r_base'] * (0.6 + z_factor * 0.8)
@@ -147,7 +142,7 @@ class BrainFatigueVisualizer:
 
     def _draw_connections(self, usage_time):
         """
-        現在の疲労度に応じてシナプス（接続）を描画する
+        現在の疲労度に応じてシナプス（接続）を描画
         """
         if usage_time < 2:
             fatigue = 0.0
@@ -172,7 +167,7 @@ class BrainFatigueVisualizer:
         """
         認知症フェーズで脳の老廃物（プラーク）を描画する
         """
-        # ★★★ プラークの出現が「2時間」から始まるように変更 ★★★
+        # プラークの出現が「2時間」から
         if usage_time > 2:
             # 2時間から8時間にかけてプラークの数が増える
             num_plaques = int((usage_time - 2) / 6.0 * (NUM_NEURONS * 0.4))
@@ -197,7 +192,7 @@ class BrainFatigueVisualizer:
 
     def _animate_signals(self):
         """
-        神経信号のアニメーションを処理する
+        神経信号のアニメーションを処理
         """
         if not self.connections: return
 
